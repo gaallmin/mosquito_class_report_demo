@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 def show_team_data():
-    st.title('우리 팀이 수집한 데이터 소개')
+    st.header('2. 우리 팀이 수집한 데이터를 소개해주세요')
     
     with st.form(key='data_input_form'):
         # Define empty lists to collect input data
@@ -44,11 +44,13 @@ def show_team_data():
             st.dataframe(df)
 
 def main():
-    st.title("데이터 분석 보고서 작성")
-    st.write("CSV 파일을 업로드하고 설명을 입력하세요!")
+    st.title("Part I. 데이터 수집 보고서 작성")
+    st.write("이 파트에서는 우리 조가 수집한 데이터를 설명하고 이를 바탕으로 프로젝트의 가설을 제시해주세요 😃!")
+    st.write("---")
 
     # 파일 업로드 위젯
-    uploaded_file = st.file_uploader("CSV 파일을 업로드하세요", type=["csv"])
+    st.header("1. 먼저 CSV 파일을 업로드 해주세요")
+    uploaded_file = st.file_uploader("csv 파일을 제출해주세요",type=["csv"])
 
     if uploaded_file is not None:
         try:
@@ -58,13 +60,15 @@ def main():
             # 데이터프레임 표시
             st.write("업로드된 데이터:")
             st.dataframe(df)
-
-            # 데이터 설명 입력란
-            data_description = st.text_area("프로젝트 설명, 우리팀이 설정한 가설 (ex: 습도는 모기 지수에 어떤 영향을 미치는가?) 등 프로젝트를 자세히 기술해주세요.")
-            if data_description:
+            # main 문 실행
+            if show_team_data():
                 st.write("제출되었습니다!")
-                # main문 수행
-                show_team_data()
+            # 데이터 설명 입력란
+                st.header("3. 프로젝트의 개요를 적어주세요")
+                data_description = st.text_area("프로젝트 설명, 우리팀이 설정한 가설 (ex: 습도는 모기 지수에 어떤 영향을 미치는가?) 등 프로젝트를 자세히 기술해주세요.")
+                if data_description:
+                    st.write("제출되었습니다!")
+                
 
         except Exception as e:
             st.error(f"파일을 처리하는 중 오류가 발생했습니다: {e}")

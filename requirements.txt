@@ -1,5 +1,5 @@
 ﻿pymongo
 streamlit
-
+matplotlib
 
 
